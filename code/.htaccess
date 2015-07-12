@@ -1,0 +1,51 @@
+###
+#   Copyright (C)2015 Mehmet Durgel
+#
+#   This file is part of SiteBase.
+#
+#   SiteBase is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   SiteBase is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with SiteBase.  If not, see <http://www.gnu.org/licenses/>
+###
+###
+#  __.htaccess__
+#
+#  @author Mehmet Durgel <md@legrud.net>
+#  @date 30-05-2015
+#  @time 11:32
+###
+RewriteEngine On
+
+Options -Indexes
+DirectoryIndex index.php
+
+RewriteRule ^(?!site/assets/)lib/(.*)$ site/assets/lib/$1 [L]
+RewriteRule ^(?!site/assets/)font/(.*)$ site/assets/font/$1 [L]
+RewriteRule ^(?!site/assets/)files/(.*)$ site/assets/files/$1 [L]
+
+RewriteRule ^(?!site/assets/)([^/]*)\.(js|css)$ site/assets/$2/$1.$2 [L]
+RewriteRule ^(?!site/assets/)([^/]*)/([^/]*)\.(js|css)$ site/assets/$3/$1/$2.$3 [L]
+RewriteRule ^(?!site/assets/)(.*/[^/]*)/([^/]*)\.(js|css)$ site/assets/$3/$1/$2.$3 [L]
+
+RewriteRule ^(?!site/assets/)([^/]*)\.(jpg|gif|png|svg)$ site/assets/images/$1.$2 [L]
+RewriteRule ^(?!site/assets/)([^/]*)/([^/]*)\.(jpg|gif|png|svg)$ site/assets/images/$1/$2.$3 [L]
+RewriteRule ^(?!site/assets/)(.*/[^/]*)/([^/]*)\.(jpg|gif|png|svg)$ site/assets/images/$1/$2.$3 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule \.(css|js|jpg|gif|png|svg)$ - [R=404,L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^ index.php [QSA,L]
+
+RedirectMatch 404 \.(?:ini|phtml)$
