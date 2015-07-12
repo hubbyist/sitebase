@@ -1,0 +1,68 @@
+/**
+ * Copyright (C)2015 Mehmet Durgel
+ * __OpenSans.css__
+ *
+ * @author Mehmet Durgel <md@legrud.net>
+ * @date 12-07-2015
+ * @time 09:48
+ */
+@font-face {
+	font-family: OpenSans;
+	font-weight: normal;
+	font-style: normal;
+	src: url('OpenSans.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSans;
+	font-weight: bold;
+	font-style: normal;
+	src: url('OpenSans-Bold.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSans;
+	font-weight: normal;
+	font-style: italic;
+	src: url('OpenSans-Italic.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSans;
+	font-weight: bold;
+	font-style: italic;
+	src: url('OpenSans-BoldItalic.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSansLight;
+	font-weight: normal;
+	font-style: normal;
+	src: url('OpenSans-Light.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSansLight;
+	font-weight: normal;
+	font-style: italic;
+	src: url('OpenSans-LightItalic.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSansSemiBold;
+	font-weight: normal;
+	font-style: normal;
+	src: url('OpenSans-SemiBold.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSansSemiBold;
+	font-weight: normal;
+	font-style: italic;
+	src: url('OpenSansSemi-SemiBoldItalic.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSansExtraBold;
+	font-weight: normal;
+	font-style: normal;
+	src: url('OpenSans-ExtraBold.ttf') format("truetype");
+}
+@font-face {
+	font-family: OpenSansExtraBold;
+	font-weight: normal;
+	font-style: italic;
+	src: url('OpenSansExtra-ExtraBoldItalic.ttf') format("truetype");
+}
