@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright (C)2015 Mehmet Durgel
+ * __main.phtml__
+ *
+ * @author Mehmet Durgel <md@legrud.net>
+ * @date 12-07-2015
+ * @time 10:37
+ */
+?><!DOCTYPE html>
+<html>
+	<head>
+		<title><?php echo $data->page['title']; ?></title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="site.css"/>
+	</head>
+	<body>
+		<div id="header" class="container">
+			<div id="logo">
+				<a href="<?php echo $data->site['sitebase']['backlink']; ?>">
+					<img src="sitebase.png" width="128" height="128" alt="Site Base Logo"/>
+				</a>
+			</div>
+		</div>
+		<div id="content" class="container">
+			<?php echo $data->content ?>
+		</div>
+		<div id="footer" class="container">
+
+		</div>
+	</body>
+</html>
