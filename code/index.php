@@ -77,6 +77,13 @@ $data->target = explode(DS, str_replace(EXT_HTML, '', $path));
 $service_path = PATH_SERVICES . $data->target[0] . EXT_PHP;
 if(file_exists($service_path))
 {
+	//Get request method
+	$data->method = $_SERVER['REQUEST_METHOD'];
+	if(isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']))
+	{
+		$data->method = strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+	}
+
 	//Set service name
 	$data->servicename = $data->target[0];
 	include_once $service_path;
