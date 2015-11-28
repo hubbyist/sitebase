@@ -28,35 +28,51 @@
 /**
  * All purpose render function
  */
-function render($template, $data){
-	if(!is_object($data))
-	{
-		return false;
-	}
-	ob_start();
-	include PATH_VIEWS . $template;
-	return ob_get_clean();
+function render($template, &$data){
+	$closure = function($template, $data){
+		if(!is_object($data))
+		{
+			return false;
+		}
+		include PATH_VIEWS . $template;
+	};
+	return createOutputWithClosure($closure, [$template, $data]);
 }
 
 /**
  * Utility render function
  */
-function utils($utility, $data, $parameters = array()){
-	if(!is_object($data))
+function utils($utility, $parameters = array()){
+	if(!is_array($parameters))
 	{
 		return false;
 	}
+	$closure = include PATH_UTILS . $utility . EXT_PHTML;
+	return createOutputWithClosure($closure, $parameters);
+}
+
+/**
+ * In buffer error checking function
+ */
+function createOutputWithClosure($closure, $variables){
+	$error_count = $GLOBALS['ERROR_COUNT'];
 	ob_start();
-	$callback = include PATH_UTILS . $utility . EXT_PHTML;
-	call_user_func_array($callback, $parameters);
-	return ob_get_clean();
+	call_user_func_array($closure, $variables);
+	$output = ob_get_clean();
+	//If an error occurs while creating output always echo the buffer
+	if($error_count < $GLOBALS['ERROR_COUNT'])
+	{
+		echo $output;
+	}
+	return $output;
 }
 
 /**
  * Error Display function
  */
 function showError($no, $message, $file, $line, $context){
-	header('Content-type: text/plain');
+	$GLOBALS['ERROR_COUNT'] ++;
+	header('Content-Type: text/plain; charset=utf-8');
 	$error = array(
 		'no' => $no,
 		'message' => $message,
@@ -64,8 +80,19 @@ function showError($no, $message, $file, $line, $context){
 		'line' => $line,
 		'context' => $context
 	);
-	echo NL . $error['no'] . SP . CLN . SP . $error['message']
-	. NL . SP . $error['file'] . DOT . $error['line'] . NL;
+	echo NL . $error['no'] . SPC . CLN . SPC . $error['message']
+	. NL . SPC . $error['file'] . DOT . $error['line'] . NL;
+}
+
+/**
+ * ShutDown Function to catch fatal errors
+ */
+function ShowFatalError(){
+	$error = error_get_last();
+	if($error !== NULL)
+	{
+		call_user_func_array('showError', $error);
+	}
 }
 
 /**
@@ -77,18 +104,7 @@ function pageslist($location){
 	foreach($metas as $name => $meta){
 		$page = $meta;
 		$page['name'] = $name;
-		if(isset($page['navigation']))
-		{
-			$page['navigation'] = explode(CLN, $page['navigation']);
-		}
-		else
-		{
-			$page['navigation'] = array();
-		}
-		if(isset($page['hidden']))
-		{
-			$page['hidden'] = explode(CLN, $page['hidden']);
-		}
+		$page['path'] = baseURL();
 		$pages[$name] = $page;
 	}
 	return $pages;
