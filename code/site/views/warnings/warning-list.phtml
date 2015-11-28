@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright (C)2015 Mehmet Durgel
+ * __warning-list.phtml__
+ *
+ * @author Mehmet Durgel <md@legrud.net>
+ * @date 28-11-2015
+ * @time 16:59
+ */
+?>
+<?php foreach($data->warnings as $warning): ?>
+	<div class="warning <?php echo $warning['type']; ?>">
+		<?php $case = (isset($warning['case'])) ? $warning['case'] : MB_CASE_TITLE; ?>
+		<?php echo convertCase($warning['message'], $case); ?>
+	</div>
+<?php endforeach; ?>

@@ -1,0 +1,65 @@
+/**
+ * Copyright (C)2015 Mehmet Durgel
+ * __layout.css__
+ *
+ * @author Mehmet Durgel <md@legrud.net>
+ * @date 28-11-2015
+ * @time 16:27
+ */
+*{
+	margin: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	line-height: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+}
+div#page {
+	width: 100%;
+	min-height: 100%;
+	position: relative;
+	padding: 168px 0 40px;
+}
+div#header {
+	position: absolute;
+	height: 168px;
+	top: 0;
+}
+div#center{
+	position: relative;
+	width: 100%;
+	min-height: 100%;
+}
+div#footer {
+	position: absolute;
+	height: 40px;
+	bottom: 0px;
+}
+div#header, div#footer{
+	width: 100%;
+	z-index: 1;
+}
+div#columns{
+	display: flex;
+	width: 100%;
+	min-height: 100%;
+}
+div#aside, div#content{
+	min-height: 100%;
+	display: inline-block;
+}
+div#content{
+	width: 100%;
+	text-align: left;
+}
+span,a,p,em,strong,h1,h2,h3,h4,h5,h6,pre,code,blockquote,sub,sup,del,ins,input,select,textarea,label{
+	line-height: normal;
+}

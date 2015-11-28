@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright (C)2015 Mehmet Durgel
+ * __asset.phtml__
+ *
+ * @author Mehmet Durgel <md@legrud.net>
+ * @date 12-07-2015
+ * @time 14:43
+ */
+return function ($data) {
+	$assets = [
+		TYPE_JS => '<script src="%s' . EXT_JS . '"></script>'
+		, TYPE_CSS => '<link rel="stylesheet" type="text/css" href="%s' . EXT_CSS . '"/>'
+	];
+	foreach ($assets as $assettype => $assetformat) {
+		if (!isset($data->$assettype))
+		{
+			$data->$assettype = array();
+		}
+		if (!is_array($data->$assettype))
+		{
+			$data->$assettype = array($data->$assettype);
+		}
+		$data->{$assettype}[] = $data->pagename;
+		foreach ($data->$assettype as $asset) {
+			if (file_exists(PATH_ASSETS . $assettype . DS . $asset . DOT . $assettype))
+			{
+				printf($assetformat, $asset);
+			}
+		}
+	}
+}
+?>

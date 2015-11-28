@@ -7,16 +7,7 @@
  * @time 10:28
  */
 @import url('font/OpenSans/OpenSans.css');
-*{
-	margin: 0;
-	padding: 0;
-	margin: 0;
-	border: 0;
-	line-height: 0;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
+@import "layout.css";
 html *{
 	font-family: OpenSans, sans-serif, Tahoma, Geneva;
 }
@@ -24,18 +15,43 @@ html, body {
 	width: 100%;
 	height: 100%;
 }
+body{
+	background-color: #eee;
+}
 div.container{
 	text-align: center;
 }
 div.container *{
 	line-height: 150%;
 }
-div#logo{
-	padding: 2em;
-}
 h1{
-	color: #383F70;
+	color: #447;
 }
 h2{
-	color: #E8CF76;
+	color: #ed8;
+}
+a{
+	text-decoration: none;
+	color: #33a;
+}
+a:hover{
+	color: #55d;
+}
+div#logo{
+	padding: 20px;
+}
+div#logo,div#logo a{
+	line-height: 0;
+}
+div#logo a{
+	display: inline-block;
+}
+div#footer{
+	font-size: medium;
+	border-top: 1px solid #447;
+	line-height: 40px;
+	background-color: #ed8;
+}
+div.warning{
+	padding: 10px;
 }
