@@ -7,26 +7,28 @@
  * @date 12-07-2015
  * @time 10:37
  */
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title><?php echo $data->page['title']; ?></title>
 		<meta charset="utf-8">
+		<base href="<?php echo $data->baseURL; ?>"/>
 		<link rel="stylesheet" type="text/css" href="site.css"/>
+		<?php echo utils('asset', array($data)); ?>
 	</head>
 	<body>
-		<div id="header" class="container">
-			<div id="logo">
-				<a href="<?php echo $data->site['sitebase']['backlink']; ?>">
-					<img src="sitebase.png" width="128" height="128" alt="Site Base Logo"/>
-				</a>
+		<div id="page">
+			<div id="header" class="container">
+				<?php echo render('parts/header' . EXT_PHTML, $data); ?>
 			</div>
-		</div>
-		<div id="content" class="container">
-			<?php echo $data->content ?>
-		</div>
-		<div id="footer" class="container">
-
+			<div id="center" class="container">
+				<?php echo $data->warnings; ?>
+				<?php echo $data->content ?>
+			</div>
+			<div id="footer" class="container">
+				<?php echo render('parts/footer' . EXT_PHTML, $data); ?>
+			</div>
 		</div>
 	</body>
 </html>
