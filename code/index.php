@@ -26,54 +26,71 @@
  */
 define('INSITE', true);
 header("Content-Type: text/html; charset=utf-8");
+mb_internal_encoding('utf-8');
+
+//Define Library Path
+define('PATH_LIBRARY', 'library/');
 
 //Get Common Constants
-include_once 'constants.php';
+require_once PATH_LIBRARY . 'constants.php';
 
 //Get Common Functions
-include_once 'functions.php';
+require_once PATH_LIBRARY . 'functions.php';
+
+//Get Site Paths
+require_once 'paths.php';
+
+//Get Site Functions
+require_once 'functions.php';
 
 //Register error handler function
+$GLOBALS['ERROR_COUNT'] = 0;
 set_error_handler('showError');
+
+//Register shutdown function to handle fatal errors
+register_shutdown_function('ShowFatalError');
 
 //Create and initialize common data registry object
 $data = new stdClass();
 $data->admin = false;
 $data->pagename = false;
 $data->page = false;
+$data->template = false;
 $data->content = false;
+$data->warnings = array();
 $data->layout = 'main';
+$data->language = 'en';
 
-//Parse site ini file if exists
-$site_ini_file = PATH_SITE . 'site' . EXT_INI;
-if(file_exists($site_ini_file))
-{
-	$data->site = parse_ini_file($site_ini_file, true, INI_SCANNER_RAW);
-}
+//Load Site Config
+loadConfig(PATH_SITE, 'site', $data);
 
 //Get pages list
 $data->pages = pageslist(PATH_PAGES);
 
 //Determine request path
-$path = trim(str_replace(baseURL(), '', baseURI()));
+$data->baseURL = baseURL();
+$path = trim(str_replace($data->baseURL, '', baseURI()));
+
+//Determine request target
+$data->target = explode(DS, str_replace(EXT_HTML, '', $path));
 //Determine request type
-if(file_exists(PATH_SERVICES . $path . EXT_PHP))
+$service_path = PATH_SERVICES . $data->target[0] . EXT_PHP;
+if(file_exists($service_path))
 {
 	//Set service name
-	$data->servicename = $path;
-	include_once PATH_SERVICES . $path . EXT_PHP;
+	$data->servicename = $data->target[0];
+	include_once $service_path;
 }
-else
+if($data->target)
 {
 	//Set page name
-	$target = str_replace(EXT_HTML, '', $path);
-	if(!$target)
+	if(!$data->target[0])
 	{
 		$data->pagename = 'index';
 	}
-	elseif(array_key_exists($target, $data->pages))
+	elseif(array_key_exists($data->target[0], $data->pages))
 	{
-		$data->pagename = $target;
+		$data->pagename = $data->target[0];
 	}
 
 	//Gather page data
@@ -90,17 +107,39 @@ else
 		}
 	}
 
-	//Render page contents
-	$template = 'pages' . DS . $data->pagename . DS . $data->pagename . EXT_PHTML;
-	if(!($data->content) && file_exists(PATH_VIEWS . $template))
+	//Determine page template
+	if(!$data->template)
 	{
-		$data->content = render($template, $data);
+		$data->template = 'pages' . DS . $data->pagename . DS . $data->pagename . EXT_PHTML;
+	}
+
+	//Render page contents
+	if(!($data->content))
+	{
+		if(file_exists(PATH_VIEWS . $data->template))
+		{
+			$data->content = render($data->template, $data);
+		}
+		else
+		{
+			header(HTTP_HEADER_404_NOT_FOUND);
+			$data->page['title'] = $data->site->title;
+			$data->warnings[] = array(
+				'type' => 'error'
+				, 'message' => 'Page Not Found!'
+				, 'case' => MB_CASE_UPPER
+			);
+		}
+	}
+
+	//Render warnings
+	if(count($data->warnings) > 0)
+	{
+		$data->warnings = render('warnings' . DS . 'warning-list' . EXT_PHTML, $data);
 	}
 	else
 	{
-		header(HTTP_HEADER_404_NOT_FOUND);
-		$data->page['title'] = $data->site['title'];
-		$data->content = render('warnings' . DS . 'pagenotfound' . EXT_PHTML, $data);
+		$data->warnings = false;
 	}
 
 	//Render page data to layout
