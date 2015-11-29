@@ -33,10 +33,17 @@ require_once '../startup.php';
 header("Content-Type: text/html; charset=utf-8");
 mb_internal_encoding('utf-8');
 
-//Get Common Constants
+//Get Core Constants
 require_once PATH_CORE . 'constants.php';
 
-//Get Common Functions
+//Check Site Folder Exista
+if(!is_dir(PATH_SITE))
+{
+	header(HTTP_HEADER_500_INTERNAL_SERVER_ERROR);
+	die('Site Folder Missing!');
+}
+
+//Get Core Functions
 require_once PATH_CORE . 'functions.php';
 
 //Get Site Paths

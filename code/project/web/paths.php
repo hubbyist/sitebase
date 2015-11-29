@@ -24,8 +24,7 @@
  * @date 28-11-2015
  * @time 15:29
  */
-//PATHS
-define('PATH_SITE', 'site' . DS);
+//SITE PATHS
 define('PATH_ASSETS', PATH_SITE . 'assets' . DS);
 define('PATH_VIEWS', PATH_SITE . 'views' . DS);
 define('PATH_PAGES', PATH_VIEWS . 'pages' . DS);
