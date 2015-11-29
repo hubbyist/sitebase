@@ -29,13 +29,13 @@ header("Content-Type: text/html; charset=utf-8");
 mb_internal_encoding('utf-8');
 
 //Define Library Path
-define('PATH_LIBRARY', 'library/');
+define('PATH_CORE', '../../core/');
 
 //Get Common Constants
-require_once PATH_LIBRARY . 'constants.php';
+require_once PATH_CORE . 'constants.php';
 
 //Get Common Functions
-require_once PATH_LIBRARY . 'functions.php';
+require_once PATH_CORE . 'functions.php';
 
 //Get Site Paths
 require_once 'paths.php';
