@@ -35,6 +35,9 @@ define('CMM', ',');
 define('SPC', ' ');
 define('CLN', ':');
 
+//COMMON PATHS
+define('PATH_SITE', 'site' . DS);
+
 //FILE TYPES
 define('TYPE_TXT', 'txt');
 define('TYPE_PHP', 'php');
