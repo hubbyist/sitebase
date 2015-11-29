@@ -25,11 +25,13 @@
  * @time 14:29
  */
 define('INSITE', true);
+
+//Call Project Startup
+require_once '../startup.php';
+
+//Base Settings For Web
 header("Content-Type: text/html; charset=utf-8");
 mb_internal_encoding('utf-8');
-
-//Define Library Path
-define('PATH_CORE', '../../core/');
 
 //Get Common Constants
 require_once PATH_CORE . 'constants.php';
